@@ -1,0 +1,1 @@
+These QLearning algorithms are already included in the core code and should not be compiled.  However, I include the source code here for those curious how I coded them as well as the variations I made to improve upon the base QLearning algorithm. -pftq
