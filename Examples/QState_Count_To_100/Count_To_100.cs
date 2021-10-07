@@ -12,7 +12,7 @@ namespace QLearner.QStates
         private const int CountTo = 100; // The ending count
         private readonly QAction UP = new QAction_String("up"), DOWN = new QAction_String("down");
 
-        public override QState Initialize()
+        public override QState Start()
         {
             value = 0;
             upIncrement = downIncrement = 1;
