@@ -16,8 +16,13 @@ namespace QLearner.QStates
          * When you are done coding, "Build" the solution in Visual Studio.  Your finished dll file will be in the bin/Release file.  You can now load this as a plugin file when running QLearner.
          */
 
-        // The first thing called from this class when trial begins (either after immediately after Learn or Awaken is clicked or at the beginning of each Learning Trial).  It should return a new instance of your object with all parameters/variables initialized to create the initial/starting state.  Make sure to actually copy over all necessary variables/objects and not just pass references.
-        public override QState Initialize()
+        // Run once all time.  Instantiate variables and other one-time setups (Renaming tables, GUI, etc can go here) before any trials.
+        public override void Initialize()
+        {
+        }
+
+        // The first thing called from this class when trial begins.  It should return a new instance of your object with all parameters/variables initialized to create the initial/starting state.  Make sure to actually create a stand-alone instance not just pass references.
+        public override QState Start()
         {
             return this;
         }
@@ -93,7 +98,7 @@ namespace QLearner.QStates
         // Tip: Feature values should be defined as 1 or 0 (on/off) or try to normalize the value out of 1 as opposed to using infinite domain.
         public override Dictionary<QFeature, decimal> GetFeatures(QAction action)
         {
-            { return new Dictionary<QFeature, decimal>() { { new QFeature_String(ToString()), 1 }}; }
+            { return new Dictionary<QFeature, decimal>() { { new QFeature_StateAction(new QStateActionPair(this, action)), 1 }}; }
         }
 
         // Called when the user clicks on the Settings button with your plugin selected.
@@ -120,14 +125,6 @@ namespace QLearner.QStates
         public override object Save()
         {
             return null;
-        }
-
-        // If the above are implemented correctly, the GetCopy() function should be able to return a duplicate QState object by just calling Open(Save())
-        public QState GetCopy()
-        {
-            QState s = Open(Save());
-            s.Inherit(this);
-            return s;
         }
     }
 }
