@@ -20,7 +20,7 @@ namespace QLearner.QStates
 
         private readonly QAction UP = new QAction_String("up"), DOWN = new QAction_String("down"), LEFT = new QAction_String("left"), RIGHT = new QAction_String("right");
 
-        public override QState Initialize()
+        public override QState Start()
         {
             WriteOutput("Dimensions: " + width + "x" + height, true);
             self = new Point(startx, starty);
@@ -184,10 +184,10 @@ namespace QLearner.QStates
         public override Dictionary<QFeature, decimal> GetFeatures(QAction action)
         {
             Point self = ((Maze_With_No_Walls)GetNewState(action)).self;
-            QSearch qsearch = new QSearch(this);
+            Search qsearch = new Search(this);
             Maze_With_No_Walls simpleMaze = new Maze_With_No_Walls() { maze = maze, self = self, goal = goal, width = width, height = height };
-            QSearchResult bestPath = qsearch.AStar(simpleMaze);
-
+            SearchResult bestPath = qsearch.AStar(simpleMaze);
+            
             return QFeature_String.FromStringDecimalDictionary(new Dictionary<string, decimal>() {
                 //{this.GetHashCode().ToString()+"_"+action, 1}, // Identity to convert this back to QLearning
                 {"Goal", goal==self? 1:0},
